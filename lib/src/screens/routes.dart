@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 
 Map<String, WidgetBuilder> body = {
+  '/':(context) => InsertUserScreen(),
   '/initial':(context) => InitialScreen(),
   '/races':(context) => RacesScreen(),
-  '/':(context) => InsertUserScreen(),
+
 
 /*  '/cores': (context) => InformationScreen(),
   '/estates': (context) => EstatesScreen(),

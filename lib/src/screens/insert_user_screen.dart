@@ -45,7 +45,7 @@ class _InsertUserScreenState extends State<InsertUserScreen> {
             Timer(
                 Duration(seconds: 3),
                 () => Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/inital', (Route<dynamic> route) => false));
+                    '/initial', (Route<dynamic> route) => false));
             return new Text("Bem vindo de novo: ${snapshot.data}");
           } else if (snapshot.hasError) {
             return _newUser();
