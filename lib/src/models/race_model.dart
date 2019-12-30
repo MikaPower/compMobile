@@ -1,27 +1,62 @@
-class RaceModel {
-  int _page;
-  int _total_results;
-  int _total_pages;
-  List<_Result> _results = [];
+// To parse this JSON data, do
+//
+//     final racesModel = racesModelFromJson(jsonString);
 
-  ItemModel.fromJson(Map<String, dynamic> parsedJson) {
-    print(parsedJson['results'].length);
-    _page = parsedJson['page'];
-    _total_results = parsedJson['total_results'];
-    _total_pages = parsedJson['total_pages'];
-    List<_Result> temp = [];
-    for (int i = 0; i < parsedJson['results'].length; i++) {
-      _Result result = _Result(parsedJson['results'][i]);
-      temp.add(result);
-    }
-    _results = temp;
-  }
+import 'dart:convert';
 
-  List<_Result> get results => _results;
+List<RacesModel> racesModelFromJson(String str) => List<RacesModel>.from(json.decode(str).map((x) => RacesModel.fromJson(x)));
 
-  int get total_pages => _total_pages;
+String racesModelToJson(List<RacesModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-  int get total_results => _total_results;
+class RacesModel {
+  List<Race> races;
 
-  int get page => _page;
+  RacesModel({
+    this.races,
+  });
+
+  factory RacesModel.fromJson(Map<String, dynamic> json) => RacesModel(
+    races: List<Race>.from(json["races"].map((x) => Race.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "races": List<dynamic>.from(races.map((x) => x.toJson())),
+  };
+
+
+
+}
+
+class Race {
+  int id;
+  String name;
+  String latitude;
+  String longitude;
+  String image;
+
+  Race({
+    this.id,
+    this.name,
+    this.latitude,
+    this.longitude,
+    this.image,
+  });
+
+  factory Race.fromJson(Map<String, dynamic> json) => Race(
+    id: json["id"],
+    name: json["name"],
+    latitude: json["latitude"],
+    longitude: json["longitude"],
+    image: json["image"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "latitude": latitude,
+    "longitude": longitude,
+    "image": image,
+  };
+
+
 }
