@@ -6,26 +6,12 @@ import 'package:cmobile/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Client, Response, post;
 
+
 class RacesApiProvider implements Source {
   Client client = Client();
   final _baseUrl = "http://127.0.0.1:8000/races";
 
-  Future<RacesModel> fetchRaces() async {
-    try {
-      final response = await client.get("$_baseUrl");
-      print(response.reasonPhrase);
-      print(response.statusCode);
-      print(response.body.toString());
-      if (response.statusCode == 200) {
-        return RacesModel.fromJson(json.decode(response.body)[0]);
-      } else {
-        throw Exception('Failed to load races');
-      }
-    }
-    catch(err){
-      return null;
-    }
-  }
+
 
   Future<Pilot> registerPilot(id, pilotJson) async {
     // set up POST request arguments
@@ -37,7 +23,7 @@ class RacesApiProvider implements Source {
     try {
       response = await post(url, headers: headers, body: jsonEncode(pilotJson));
     } catch (err) {
-        return Future.error("NO CONNECTING TO SERVER");
+      return Future.error("NO CONNECTING TO SERVER");
     }
     print("print after exception");
     // check the status code for the result
@@ -61,12 +47,53 @@ class RacesApiProvider implements Source {
       print(response.body.toString());
       if (response.statusCode == 200) {
         return PilotsModel.fromJson(json.decode(response.body));
-      }
-      else {
+      } else {
         return Future.error("ERROR on getting race pilots");
       }
     } catch (err) {
       return null;
     }
   }
+
+
+
+
+  Future<Post> fetchPost(Client client) async {
+    final response =
+    await client.get('https://jsonplaceholder.typicode.com/posts/1');
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON.
+      return Post.fromJson(json.decode(response.body));
+    } else {
+      print("wtf");
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<RacesModel> fetchRaces(Client client) async {
+    try {
+
+      final response = await client.get("$_baseUrl");
+      print("sucess api call");
+      print(response.reasonPhrase);
+      print(response.statusCode);
+      print(response.body.toString());
+      print(json.decode(response.body)[0]);
+      print("TESTE AFTER PRINT");
+      if (response.statusCode == 200) {
+        print("sucess api call");
+        return RacesModel.fromJson(json.decode(response.body)[0]);
+      } else {
+        throw Exception('Failed to load races');
+      }
+    } catch (err) {
+      return null;
+    }
+  }
+}
+
+class Post {
+  dynamic data;
+  Post.fromJson(this.data);
 }

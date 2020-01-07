@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:http/http.dart' show Client;
 
 import 'package:cmobile/src/models/pilot_model.dart';
 import 'package:cmobile/src/models/race_model.dart';
@@ -37,6 +38,7 @@ class DatabaseHelper implements Source, Cache {
 
   // this opens the database (and creates it if it doesn't exist)
   _initDatabase() async {
+    print('start_database');
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
     return await openDatabase(path,
@@ -161,7 +163,7 @@ class DatabaseHelper implements Source, Cache {
   }
 
   @override
-  Future<RacesModel> fetchRaces() async {
+  Future<RacesModel> fetchRaces(Client client) async {
     Database db = await instance.database;
     List<Map> list = await db.rawQuery('SELECT * FROM $tableRaces');
     if (list.length > 0) {
@@ -214,7 +216,8 @@ class DatabaseHelper implements Source, Cache {
   @override
   Future<int> clear() async {
     Database db = await instance.database;
-    return db.delete("$tablePilots");
+     db.delete("$tablePilots");
+     return db.delete("$tableRaces");
   }
 
 

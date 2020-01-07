@@ -44,7 +44,8 @@ class _RacesScreenState extends State<RacesScreen> {
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
-          return GridTile(
+          return Container(margin: EdgeInsets.fromLTRB(0, 0, 0, 5),child: GridTile(
+            key: Key("race${snapshot.data.races[index].id}"),
               child: InkResponse(
                   enableFeedback: true,
                   child: Image.network(
@@ -56,7 +57,7 @@ class _RacesScreenState extends State<RacesScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => RaceDetailScreen(
-                              race: snapshot.data.races[index])))));
-        });
+                              race: snapshot.data.races[index]))))));
+           });
   }
 }

@@ -8,6 +8,8 @@ import 'package:cmobile/src/models/race_model.dart';
 import 'package:cmobile/src/screens/pilots_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' show Client;
+
 
 class Repository {
   final racesApiProvider = RacesApiProvider();
@@ -35,10 +37,11 @@ class Repository {
   /// se nao tiver ai há api e guardar na base de dados
   Future<RacesModel> fetchAllRaces() async {
     RacesModel item;
-
+    Client client = Client();
+    print("teste");
     var source;
     for (source in sources) {
-      item = await source.fetchRaces();
+      item = await source.fetchRaces(client);
       print("fetch races $item");
       if (item != null) {
         break;
@@ -46,6 +49,8 @@ class Repository {
     }
     for (var cache in caches) {
       if (cache != source) {
+        print("update database");
+        cache.clear();
         cache.addRaceModel(item);
       }
     }
@@ -58,11 +63,13 @@ class Repository {
     for (source in sources) {
       item = await source.fetchRacePilots(id);
       if (item != null) {
+        print("fetched data");
         break;
       }
     }
     for (var cache in caches) {
       if (cache != source) {
+        print("update database");
         cache.addPilotModel(item);
       }
     }
@@ -71,7 +78,7 @@ class Repository {
 }
 
 abstract class Source {
-  Future<RacesModel> fetchRaces();
+  Future<RacesModel> fetchRaces(Client client);
 
   Future<PilotsModel> fetchRacePilots(int id);
 }

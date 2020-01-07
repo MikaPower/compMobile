@@ -19,73 +19,76 @@ class _RaceDetailScreenState extends State<RaceDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text(widget.race.name)),
-      body: new Container(
-          child: new Column(
-        children: <Widget>[
-          new Container(
-            child: Image.network(widget.race.image),
-          ),
-          new Container(
+        appBar: new AppBar(title: new Text(widget.race.name)),
+        body: new SingleChildScrollView(
+          child: new Container(
               child: new Column(
             children: <Widget>[
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  new RaisedButton(
-                      color: Colors.black,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.blue)),
-                      child: new Text('Inscrever'),
-                      onPressed: () {
-                      return  Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterScreen(
-                                      raceId: widget.race.id,
-                                    )));
-                      }),
-                  new RaisedButton(
-                      child: new Text("Lista de inscritos"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PilotsScreen(
-                                      raceId: widget.race.id,
-                                    )));
-                      })
-                ],
+              new Container(
+                child: Image.network(widget.race.image),
               ),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              new Container(
+                  child: new Column(
                 children: <Widget>[
-                  new RaisedButton(
-                      color: Colors.black,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.blue)),
-                      child: new Text('Localização'),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MapInsideOperationScreen(
-                                    point: new LatLng(
-                                        double.parse(widget.race.latitude),
-                                        double.parse(widget.race.longitude)))));
-                      }),
-                  new RaisedButton(
-                      child: new Text("Inscritos offline"), onPressed: () {})
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      new RaisedButton(
+                          key: Key("register_pilot_button"),
+                          color: Colors.black,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.blue)),
+                          child: new Text('Inscrever'),
+                          onPressed: () {
+                            return Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterScreen(
+                                          raceId: widget.race.id,
+                                        )));
+                          }),
+                      new RaisedButton(
+                          child: new Text("Lista de inscritos"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PilotsScreen(
+                                          raceId: widget.race.id,
+                                        )));
+                          })
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new RaisedButton(
+                          color: Colors.black,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.blue)),
+                          child: new Text('Localização'),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MapInsideOperationScreen(
+                                            point: new LatLng(
+                                                double.parse(
+                                                    widget.race.latitude),
+                                                double.parse(
+                                                    widget.race.longitude)))));
+                          }),
+                    ],
+                  )
                 ],
-              )
+              ))
             ],
-          ))
-        ],
-      )),
-    );
+          )),
+        ));
   }
 }

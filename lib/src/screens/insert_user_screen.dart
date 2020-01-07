@@ -29,7 +29,7 @@ class _InsertUserScreenState extends State<InsertUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: new Text('InsertUser'),),
+        appBar: AppBar(title: new Text('Insert User / Welcome'),),
         body: Center(
             child: new Padding(
                 padding: EdgeInsets.all(10.0),
@@ -74,6 +74,7 @@ class _InsertUserScreenState extends State<InsertUserScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            key: Key("form_user"),
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter some text';
@@ -86,10 +87,11 @@ class _InsertUserScreenState extends State<InsertUserScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
+              key: Key("insert_user_screen_submit_user_button"),
               onPressed: () {
                 _submit(context);
               },
-              child: Text('Submit'),
+              child: Text('Submit',key: Key("submit_button_text")),
             ),
           ),
         ],

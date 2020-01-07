@@ -39,7 +39,7 @@ class _PilotsScreenState extends State<PilotsScreen> {
                 return new Center(child:Text("${snapshot.error}"));
               }
               // By default, show a loading spinner.
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             },
           )
         ));

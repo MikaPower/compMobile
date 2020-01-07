@@ -11,7 +11,6 @@ import 'package:cmobile/src/screens/race_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
-  @override
   final int raceId;
 
   const RegisterScreen({Key key, this.raceId}) : super(key: key);
@@ -64,6 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: <Widget>[
 
                   TextFormField(
+                    key: Key("form_name"),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter some text';
@@ -74,6 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(labelText: 'Name'),
                   ),
                   TextFormField(
+                    key: Key("form_bike_name"),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter some text';
@@ -84,6 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(labelText: 'Bike Name'),
                   ),
                   TextFormField(
+                    key: Key("form_engine_size"),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter some text';
@@ -96,6 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: RaisedButton(
+                      key: Key("form_submit"),
                       onPressed: () {
                         if (isOffline) {
                           _showDialog(); /*_submit(context);*/
