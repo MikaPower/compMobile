@@ -46,6 +46,9 @@ class _PilotsScreenState extends State<PilotsScreen> {
   }
 
   pilotsList( List<Pilot> pilots){
+    if (pilots?.isEmpty ?? true) {
+      return new Center(child: new Text("No pilots registered yet"),);
+    }
     return ListView.builder(
       itemCount: pilots.length,
       itemBuilder: (context, int index) {

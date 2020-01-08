@@ -70,6 +70,7 @@ class Repository {
     for (var cache in caches) {
       if (cache != source) {
         print("update database");
+        cache.deleteRacePilots(id);
         cache.addPilotModel(item);
       }
     }
@@ -89,4 +90,6 @@ abstract class Cache {
   Future<int> addPilotModel(PilotsModel races);
 
   Future<int> clear();
+  Future<int> deleteRacePilots(int id);
+
 }

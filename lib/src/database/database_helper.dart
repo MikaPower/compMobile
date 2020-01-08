@@ -45,10 +45,10 @@ class DatabaseHelper implements Source, Cache {
         version: _databaseVersion, onCreate: _onCreate);
   }
 
-
   static Future _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
+
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     print('criar');
@@ -59,7 +59,6 @@ class DatabaseHelper implements Source, Cache {
         name TEXT
       )
       """);
-
 
     await db.execute("""
       CREATE TABLE $tableRaces
@@ -83,8 +82,6 @@ class DatabaseHelper implements Source, Cache {
         FOREIGN KEY (race_id) REFERENCES $tableRaces (id) ON DELETE NO ACTION ON UPDATE NO ACTION
       )
       """);
-
-
   }
 
   // Helper methods
@@ -185,10 +182,8 @@ class DatabaseHelper implements Source, Cache {
   @override
   Future<int> addRaceModel(RacesModel model) async {
     Database db = await instance.database;
-    for(int i=0;i<model.races.length;i++){
-       db.insert(
-          "$tableRaces",
-          model.races[i].toJson());
+    for (int i = 0; i < model.races.length; i++) {
+      db.insert("$tableRaces", model.races[i].toJson());
     }
     return 0;
   }
@@ -196,31 +191,31 @@ class DatabaseHelper implements Source, Cache {
   @override
   Future<int> addPilotModel(PilotsModel model) async {
     Database db = await instance.database;
-    for(int i=0;i<model.pilots.length;i++){
-      db.insert(
-          "$tablePilots",
-          model.pilots[i].toJson());
+    for (int i = 0; i < model.pilots.length; i++) {
+      db.insert("$tablePilots", model.pilots[i].toJson());
     }
     return 1;
   }
 
-
   Future<int> addRegisteredPilot(int raceId, pilot) async {
     print("$raceId,Insert on database Registered Pilot");
     Database db = await instance.database;
-    return db.insert(
-        "$tablePilots",
-        pilot.toMapForDb());
+    return db.insert("$tablePilots", pilot.toMapForDb());
   }
 
   @override
   Future<int> clear() async {
+    print("Delete All");
     Database db = await instance.database;
-     db.delete("$tablePilots");
-     return db.delete("$tableRaces");
+    db.delete("$tablePilots");
+    return db.delete("$tableRaces");
   }
 
-
-
-
+  @override
+  Future<int> deleteRacePilots(int id) async {
+    Database db = await instance.database;
+    print("update database by deleting old");
+    return await db
+        .delete("$tablePilots", where: 'race_id = ?', whereArgs: [id]);
+  }
 }
