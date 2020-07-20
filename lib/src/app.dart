@@ -7,7 +7,7 @@ class App extends StatelessWidget {
     return new MaterialApp(
           title: 'Extreme Lagares 2019',
           routes: body,
-          initialRoute: '/',
+          initialRoute: '/inital',
         );
   }
 }

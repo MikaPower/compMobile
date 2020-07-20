@@ -20,7 +20,6 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   Future<Pilot> pilot;
-  Future<RacesModel> races;
   StreamSubscription _connectionChangeStream;
   Pilot pilotModel;
 
@@ -123,7 +122,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Navigator.of(context).pop());
                         return Text("Obrigado pela sua inscrição ${snapshot.data
                             .name}");
-
                       }
                       return Center(
                           child: CircularProgressIndicator());
