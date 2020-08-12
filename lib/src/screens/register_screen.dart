@@ -111,7 +111,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   FutureBuilder<Pilot>(
                     future: pilot,
-
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
